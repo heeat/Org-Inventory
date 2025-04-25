@@ -1,0 +1,58 @@
+{
+  "name": "org-inventory",
+  "description": "Salesforce CLI plugin to list all installed packages in an org",
+  "version": "1.0.0",
+  "author": "Salesforce",
+  "bugs": "https://github.com/username/org-inventory/issues",
+  "dependencies": {
+    "@oclif/core": "^2",
+    "@salesforce/core": "^3",
+    "@salesforce/sf-plugins-core": "^3"
+  },
+  "devDependencies": {
+    "@salesforce/cli-plugins-testkit": "^4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^18.15.11",
+    "@types/sinon": "^17.0.4",
+    "eslint": "^8.37.0",
+    "sinon": "^20.0.0",
+    "typescript": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "/lib",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "keywords": [
+    "sfdx-plugin",
+    "sfdx",
+    "sf-plugin",
+    "sf",
+    "salesforce"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "sf",
+    "topics": {
+      "org-inventory": {
+        "description": "List installed packages in a Salesforce org"
+      }
+    },
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "eslint src/**/*.ts",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif manifest && oclif readme",
+    "version": "oclif readme && git add README.md",
+    "clean": "rm -rf lib *.md.json packages.* index.js"
+  }
+}
