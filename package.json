@@ -1,9 +1,9 @@
 {
   "name": "org-inventory",
-  "description": "Salesforce CLI plugin to list all installed packages in an org",
+  "description": "Salesforce CLI plugin to list installed packages in an org",
   "version": "1.0.0",
   "author": "Salesforce",
-  "bugs": "https://github.com/username/org-inventory/issues",
+  "bugs": "https://github.com/heeat/Org-Inventory/issues",
   "dependencies": {
     "@oclif/core": "^2",
     "@salesforce/core": "^3",
@@ -27,6 +27,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
+  "homepage": "https://github.com/heeat/Org-Inventory",
   "keywords": [
     "sfdx-plugin",
     "sfdx",
@@ -47,6 +48,7 @@
       "@oclif/plugin-help"
     ]
   },
+  "repository": "heeat/Org-Inventory",
   "scripts": {
     "build": "tsc -p .",
     "lint": "eslint src/**/*.ts",
