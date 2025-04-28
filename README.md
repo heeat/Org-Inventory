@@ -1,47 +1,87 @@
 # Salesforce Org Inventory Plugin
 
-This Salesforce CLI plugin provides commands to list all installed packages in a Salesforce organization.
+This Salesforce CLI plugin provides comprehensive commands to analyze and inventory your Salesforce organization, including installed packages, licenses, and integration points.
 
-[![Version](https://img.shields.io/npm/v/org-inventory.svg)](https://npmjs.org/package/org-inventory)
-[![License](https://img.shields.io/npm/l/org-inventory.svg)](https://github.com/username/org-inventory/blob/main/package.json)
+[![Version](https://img.shields.io/npm/v/@heeat/plugin-org-inventory.svg)](https://npmjs.org/package/@heeat/plugin-org-inventory)
+[![Downloads/week](https://img.shields.io/npm/dw/@heeat/plugin-org-inventory.svg)](https://npmjs.org/package/@heeat/plugin-org-inventory)
+[![License](https://img.shields.io/npm/l/@heeat/plugin-org-inventory.svg)](https://github.com/heeat/Org-Inventory/blob/main/package.json)
 
-## Quick Start
+## Features
+
+- List all installed packages in a Salesforce org
+- View organization type and instance information
+- Check enabled cloud products
+- Monitor user licenses and usage
+- Track permission set licenses
+- Identify integration points
+- Export results in multiple formats (JSON, Markdown, Text)
+
+## Installation
+
+### Prerequisites
+
+- [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) installed
+- [Node.js](https://nodejs.org/) 14 or later
+- [Git](https://git-scm.com/downloads) installed
+
+### Install from npm
 
 ```bash
-# Link the plugin to your Salesforce CLI
-sf plugins link .
+sf plugins install @heeat/plugin-org-inventory
+```
 
-# List installed packages in an org
+### Install from source
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/heeat/Org-Inventory.git
+   cd Org-Inventory
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Link the plugin to your Salesforce CLI:
+   ```bash
+   sf plugins link .
+   ```
+
+## Usage
+
+### List Installed Packages
+
+```bash
 sf org-inventory:list --target-org <your-org>
 ```
 
-## Documentation
+### Get Comprehensive Org Inventory
 
-For complete installation and usage instructions, see the [comprehensive guide](docs/guide.md).
-
-## Commands
-
-### org-inventory:list
-
-List all installed packages in a Salesforce org
-
+```bash
+sf org-inventory:all --target-org <your-org>
 ```
-USAGE
-  $ sf org-inventory:list --target-org <value>
 
-FLAGS
-  --target-org=<value>  (required) Username or alias of the target org
+### Export Results
 
-DESCRIPTION
-  List all installed packages in a Salesforce org
+Save the list to a JSON file:
+```bash
+sf org-inventory:list --output-file=packages.json
+```
 
-  Lists namespace, status, licensing information, and dates for all packages installed in the specified org.
+Save in Markdown format:
+```bash
+sf org-inventory:list --output-file=packages.md --format=markdown
+```
 
-EXAMPLES
-  $ sf org-inventory:list --target-org myorg
+Save in text format:
+```bash
+sf org-inventory:list --output-file=packages.txt --format=text
 ```
 
 ## Development
+
+### Building the Plugin
 
 ```bash
 # Build the plugin
@@ -54,49 +94,74 @@ npm test
 npm run clean
 ```
 
+### Local Development
+
+1. Clone the repo
+   ```bash
+   git clone https://github.com/heeat/Org-Inventory.git
+   ```
+   
+2. Install dependencies
+   ```bash
+   npm install
+   ```
+   
+3. Link the plugin to your local Salesforce CLI
+   ```bash
+   sf plugins link .
+   ```
+   
+4. Build the plugin
+   ```bash
+   npm run build
+   ```
+
+## Contributing
+
+We love your input! We want to make contributing to this Salesforce CLI plugin as easy and transparent as possible, whether it's:
+
+- Reporting a bug
+- Discussing the current state of the code
+- Submitting a fix
+- Proposing new features
+- Becoming a maintainer
+
+### Development Process
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Style Guidelines
+
+- Use 2 spaces for indentation
+- Use camelCase for variables, methods, and properties
+- Use PascalCase for class names and interfaces
+- Add JSDoc comments for all methods and classes
+
+## Publishing
+
+To publish updates to npm:
+
+1. Update the version in `package.json`:
+   ```bash
+   npm version patch  # for bug fixes
+   npm version minor  # for new features
+   npm version major  # for breaking changes
+   ```
+
+2. Build and publish:
+   ```bash
+   npm run build
+   npm publish
+   ```
+
+## License
+
+[MIT](LICENSE)
+
 ## Issues
 
-Please report any issues at https://github.com/username/org-inventory/issues
-
-## Development
-
-```bash
-# Clone the repository
-git clone https://github.com/username/org-inventory.git
-cd org-inventory
-
-# Install dependencies
-npm install
-
-# Build
-npm run build
-
-# Link the plugin to use locally
-sf plugins link .
-```
-
-## Usage Examples
-
-List all installed packages in your org:
-
-```bash
-sf org-inventory:list
-```
-
-Save the list to a JSON file:
-
-```bash
-sf org-inventory:list --output-file=packages.json
-```
-
-Save the list in Markdown format:
-
-```bash
-sf org-inventory:list --output-file=packages.md --format=markdown
-```
-
-Save the list in text format:
-
-```bash
-sf org-inventory:list --output-file=packages.txt --format=text
-``` 
+Please report any issues at https://github.com/heeat/Org-Inventory/issues 

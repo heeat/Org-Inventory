@@ -17,12 +17,28 @@ The Org Inventory plugin for Salesforce CLI allows you to quickly list all insta
 - [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) installed
 - Node.js 14 or later
 
-### Installation Steps
+### Installation Method 1: From npm (Recommended)
+
+Install the plugin directly from npm:
+
+```bash
+sf plugins install @heeat/plugin-org-inventory
+```
+
+Verify the installation:
+
+```bash
+sf plugins
+```
+
+You should see `@heeat/plugin-org-inventory` in the list of installed plugins.
+
+### Installation Method 2: From GitHub
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/org-inventory.git
-   cd org-inventory
+   git clone https://github.com/heeat/Org-Inventory.git
+   cd Org-Inventory
    ```
 
 2. Install dependencies:
@@ -54,6 +70,8 @@ sf org-inventory:list --target-org <org>
 #### Parameters:
 
 - `--target-org <org>` (required): Alias or username for the target Salesforce org
+- `--output-file <path>` (optional): Path to output file where the result will be saved
+- `--format <format>` (optional): Format of the output file (json, markdown, text), default is json
 
 #### Example:
 
@@ -81,10 +99,22 @@ sf org-inventory:list --target-org default
 ### Example 2: Export package information to JSON
 
 ```bash
-sf org-inventory:list --target-org my-prod-org --json > packages.json
+sf org-inventory:list --target-org my-prod-org --output-file packages.json
 ```
 
-### Example 3: Use with CI/CD pipelines
+### Example 3: Export package information to Markdown
+
+```bash
+sf org-inventory:list --target-org my-prod-org --output-file packages.md --format markdown
+```
+
+### Example 4: Export package information to plain text
+
+```bash
+sf org-inventory:list --target-org my-prod-org --output-file packages.txt --format text
+```
+
+### Example 5: Use with CI/CD pipelines
 
 ```bash
 # In a CI/CD script
@@ -106,7 +136,7 @@ sf org-inventory:list --target-org $ORG_ALIAS --json | jq '.result' > org-packag
 
 3. **Plugin Not Found**
    - Verify the plugin is correctly installed with `sf plugins`
-   - Try reinstalling with `sf plugins link .`
+   - Try reinstalling with `sf plugins install @heeat/plugin-org-inventory`
 
 ## Development
 
@@ -135,9 +165,9 @@ npm run clean
 The plugin uses the following SOQL query to retrieve package information:
 
 ```sql
-SELECT NamespacePrefix, PackageNamespace, Status, SubscriberPackageId, SubscriberPackageName, 
-       LicenseStatus, AllowedLicenses, UsedLicenses, ExpirationDate, CreatedDate 
-FROM InstalledSubscriberPackage
+SELECT Id, NamespacePrefix, Status, AllowedLicenses, UsedLicenses, 
+       CreatedDate, ExpirationDate
+FROM PackageLicense
 ORDER BY NamespacePrefix
 ```
 

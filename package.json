@@ -1,8 +1,8 @@
 {
-  "name": "org-inventory",
+  "name": "@heeat/plugin-org-inventory",
   "description": "Salesforce CLI plugin to list installed packages in an org",
   "version": "1.0.0",
-  "author": "Salesforce",
+  "author": "Vishnu Kakani",
   "bugs": "https://github.com/heeat/Org-Inventory/issues",
   "dependencies": {
     "@oclif/core": "^2",
@@ -10,6 +10,7 @@
     "@salesforce/sf-plugins-core": "^3"
   },
   "devDependencies": {
+    "@oclif/dev-cli": "^1.26.10",
     "@salesforce/cli-plugins-testkit": "^4",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^18.15.11",
@@ -33,7 +34,10 @@
     "sfdx",
     "sf-plugin",
     "sf",
-    "salesforce"
+    "salesforce",
+    "org-inventory",
+    "package",
+    "license"
   ],
   "license": "MIT",
   "oclif": {
@@ -49,12 +53,16 @@
     ]
   },
   "repository": "heeat/Org-Inventory",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p .",
     "lint": "eslint src/**/*.ts",
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif manifest && oclif readme",
-    "version": "oclif readme && git add README.md",
-    "clean": "rm -rf lib *.md.json packages.* index.js"
+    "prepack": "rm -rf lib && tsc -b",
+    "version": "git add README.md",
+    "clean": "rm -rf lib *.md.json packages.* index.js",
+    "prepare": "npm run build"
   }
 }

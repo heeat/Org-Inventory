@@ -3,7 +3,10 @@ import { Connection, Org } from '@salesforce/core';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
-// Interface for package license information
+/**
+ * Interface for package license information retrieved from Salesforce
+ * Contains details about installed packages and their licensing
+ */
 interface PackageInfo {
   Id: string;
   NamespacePrefix: string;
@@ -14,7 +17,11 @@ interface PackageInfo {
   ExpirationDate?: string;
 }
 
-// Command class for listing installed packages
+/**
+ * Salesforce CLI command to list all installed packages in an org
+ * Provides information about package namespace, status, licensing, and dates
+ * Supports multiple output formats: console display, JSON, Markdown, and text
+ */
 export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
   // Command summary shown in the help output
   public static summary = 'List all installed packages in the org';
@@ -54,7 +61,16 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     })
   };
 
-  // Main run method for the command
+  /**
+   * Main execution method for the command
+   * 1. Parses command flags
+   * 2. Connects to the Salesforce org
+   * 3. Queries for installed packages
+   * 4. Displays or saves the results based on provided flags
+   * 
+   * @returns Promise containing the list of package information
+   * @throws Error if connection fails or query execution fails
+   */
   public async run(): Promise<PackageInfo[]> {
     // Get command flags
     const { flags } = await this.parse(OrgInventoryList);
@@ -103,7 +119,13 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     }
   }
 
-  // Helper method to display packages in the console
+  /**
+   * Displays the package information in a formatted table in the console
+   * Creates a table with columns for Namespace, Status, Licenses, Created Date, and Expiration Date
+   * Formats license information as "Used/Total" or "Used/Unlimited"
+   * 
+   * @param packages Array of PackageInfo objects to display
+   */
   private displayPackages(packages: PackageInfo[]): void {
     if (packages.length === 0) {
       this.log('No installed packages found in the org.');
@@ -134,7 +156,13 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     this.table(tableData, columns);
   }
 
-  // Helper method to format date
+  /**
+   * Formats a date string into YYYY-MM-DD format
+   * Takes a date string from Salesforce and converts it to a more readable format
+   * 
+   * @param dateStr The date string to format (typically in ISO format)
+   * @returns Formatted date string in YYYY-MM-DD format or empty string if input is invalid
+   */
   private formatDate(dateStr: string): string {
     if (!dateStr) return '';
     
@@ -146,7 +174,14 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     }
   }
 
-  // Helper method to write output to a file in the specified format
+  /**
+   * Writes package information to a file in the specified format
+   * Supports multiple output formats: JSON, Markdown, and plain text
+   * 
+   * @param packages Array of PackageInfo objects to write to file
+   * @param filePath Path where the file should be written
+   * @param format The format to use: 'json', 'markdown', or 'text'
+   */
   private writeOutputFile(packages: PackageInfo[], filePath: string, format: string): void {
     let content = '';
 
@@ -169,7 +204,13 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     writeFileSync(outputPath, content);
   }
 
-  // Helper method to transform packages for output
+  /**
+   * Transforms raw package data into a more user-friendly format
+   * Creates a clean object with well-named properties and formatted values
+   * 
+   * @param packages Array of raw PackageInfo objects from Salesforce
+   * @returns Array of transformed objects with formatted properties
+   */
   private transformPackages(packages: PackageInfo[]): any[] {
     return packages.map(pkg => ({
       Namespace: pkg.NamespacePrefix || 'N/A',
@@ -182,7 +223,13 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     }));
   }
 
-  // Helper method to format packages as markdown
+  /**
+   * Formats package information as markdown
+   * Creates a markdown table with headers and rows for each package
+   * 
+   * @param packages Array of PackageInfo objects to format
+   * @returns Markdown formatted string with package information
+   */
   private formatAsMarkdown(packages: PackageInfo[]): string {
     if (packages.length === 0) {
       return '# Installed Packages\n\nNo installed packages found in the org.';
@@ -203,7 +250,13 @@ export default class OrgInventoryList extends SfCommand<PackageInfo[]> {
     return markdown;
   }
 
-  // Helper method to format packages as plain text
+  /**
+   * Formats package information as plain text
+   * Creates a text representation with each package's details in a readable format
+   * 
+   * @param packages Array of PackageInfo objects to format
+   * @returns Plain text string with package information
+   */
   private formatAsText(packages: PackageInfo[]): string {
     if (packages.length === 0) {
       return 'Installed Packages\n\nNo installed packages found in the org.';
