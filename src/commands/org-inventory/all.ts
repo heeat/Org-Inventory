@@ -9,16 +9,13 @@ interface OrganizationInfo {
   OrganizationType: string;
   IsSandbox: boolean;
   InstanceName: string;
-  Features: string[];
 }
 
 interface PackageInfo {
   Id: string;
   NamespacePrefix: string;
   Status: string;
-  LicenseStatus: string;
   CreatedDate: string;
-  ExpirationDate?: string;
 }
 
 interface UserLicenseInfo {
@@ -52,7 +49,6 @@ interface InventoryResult {
     type: string;
     isSandbox: boolean;
     instance: string;
-    features: string[];
   };
   cloudProducts: Array<{
     name: string;
@@ -149,8 +145,7 @@ export default class OrgInventoryAll extends SfCommand<InventoryResult> {
           name: orgInfo.Name,
           type: orgInfo.OrganizationType,
           isSandbox: orgInfo.IsSandbox,
-          instance: orgInfo.InstanceName,
-          features: orgInfo.Features
+          instance: orgInfo.InstanceName
         },
         cloudProducts: await this.getCloudProducts(orgInfo, connection),
         installedPackages: packagesResult.records,
@@ -344,10 +339,10 @@ export default class OrgInventoryAll extends SfCommand<InventoryResult> {
     // Installed Packages
     content += '## Installed Packages\n\n';
     if (inventory.installedPackages.length > 0) {
-      content += '| Namespace | Status | Licenses | Created Date | Expiration Date |\n';
-      content += '|-----------|--------|----------|--------------|----------------|\n';
+      content += '| Namespace | Status | Created Date |\n';
+      content += '|-----------|--------|--------------|\n';
       inventory.installedPackages.forEach(pkg => {
-        content += `| ${pkg.NamespacePrefix || 'N/A'} | ${pkg.Status} | ${pkg.LicenseStatus} | ${pkg.CreatedDate} | ${pkg.ExpirationDate || 'Never'} |\n`;
+        content += `| ${pkg.NamespacePrefix || 'N/A'} | ${pkg.Status} | ${pkg.CreatedDate} |\n`;
       });
     } else {
       content += 'No installed packages found.\n';
@@ -421,9 +416,8 @@ export default class OrgInventoryAll extends SfCommand<InventoryResult> {
     content += 'Installed Packages:\n';
     if (inventory.installedPackages.length > 0) {
       inventory.installedPackages.forEach(pkg => {
-        content += `- ${pkg.NamespacePrefix || 'N/A'}: ${pkg.Status} (${pkg.LicenseStatus})\n`;
+        content += `- ${pkg.NamespacePrefix || 'N/A'}: ${pkg.Status}\n`;
         content += `  Created: ${pkg.CreatedDate}\n`;
-        content += `  Expires: ${pkg.ExpirationDate || 'Never'}\n`;
       });
     } else {
       content += 'No installed packages found.\n';
