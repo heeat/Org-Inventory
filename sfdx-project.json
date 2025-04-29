@@ -1,0 +1,12 @@
+{
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://gchp--dev2.sandbox.my.salesforce.com",
+    "sourceApiVersion": "58.0",
+    "oauthLocalPort": 1718
+} 
