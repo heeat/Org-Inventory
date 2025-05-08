@@ -1,167 +1,157 @@
 # Salesforce Org Inventory Plugin
 
-This Salesforce CLI plugin provides comprehensive commands to analyze and inventory your Salesforce organization, including installed packages, licenses, and integration points.
-
-[![Version](https://img.shields.io/npm/v/@heeat/plugin-org-inventory.svg)](https://npmjs.org/package/@heeat/plugin-org-inventory)
-[![Downloads/week](https://img.shields.io/npm/dw/@heeat/plugin-org-inventory.svg)](https://npmjs.org/package/@heeat/plugin-org-inventory)
-[![License](https://img.shields.io/npm/l/@heeat/plugin-org-inventory.svg)](https://github.com/heeat/Org-Inventory/blob/main/package.json)
+A comprehensive Salesforce CLI plugin for inventorying your Salesforce org's configuration, including cloud products, packages, licenses, and integrations.
 
 ## Features
 
-- List all installed packages in a Salesforce org
-- View organization type and instance information
-- Check enabled cloud products
-- Monitor user licenses and usage
-- Track permission set licenses
-- Identify integration points
-- Export results in multiple formats (JSON, Markdown, Text)
+- **Cloud Products Detection**: Identifies enabled cloud products through multiple detection methods
+- **Package Management**: Lists all installed packages and their status
+- **License Management**: Tracks user licenses and permission set licenses
+- **Integration Points**: Maps out all integration points including named credentials and custom settings
+- **Configurable Detection**: Customizable detection rules through configuration files
+- **Multiple Output Formats**: Supports JSON, Markdown, and text output formats
+- **Production Ready**: Includes error handling, logging, retry mechanisms, and performance optimizations
 
 ## Installation
 
-### Prerequisites
-
-- [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) installed
-- [Node.js](https://nodejs.org/) 14 or later
-- [Git](https://git-scm.com/downloads) installed
-
-### Install from npm
-
 ```bash
-sf plugins install @heeat/plugin-org-inventory
+sf plugins:install org-inventory
 ```
-
-### Install from source
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/heeat/Org-Inventory.git
-   cd Org-Inventory
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Link the plugin to your Salesforce CLI:
-   ```bash
-   sf plugins link .
-   ```
 
 ## Usage
 
-### List Installed Packages
+### Basic Commands
 
 ```bash
-sf org-inventory:list --target-org <your-org>
+# Get comprehensive inventory
+sf org-inventory:all --target-org myorg
+
+# List cloud products
+sf org-inventory:cloud-products --target-org myorg
+
+# List installed packages
+sf org-inventory:packages --target-org myorg
+
+# List user licenses
+sf org-inventory:user-licenses --target-org myorg
+
+# List permission set licenses
+sf org-inventory:permission-set-licenses --target-org myorg
+
+# List integration points
+sf org-inventory:integrations --target-org myorg
 ```
 
-### Get Comprehensive Org Inventory
+### Output Options
 
 ```bash
-sf org-inventory:all --target-org <your-org>
+# Save to JSON file
+sf org-inventory:all --target-org myorg --output-file=inventory.json
+
+# Save in Markdown format
+sf org-inventory:all --target-org myorg --output-file=inventory.md --format=markdown
+
+# Save in text format
+sf org-inventory:all --target-org myorg --output-file=inventory.txt --format=text
 ```
 
-### Export Results
+## Configuration
 
-Save the list to a JSON file:
-```bash
-sf org-inventory:list --output-file=packages.json
+The plugin uses a configuration file located at `src/config/default.json`. You can customize:
+
+- Cloud product detection rules
+- Integration point types
+- Performance settings
+- Logging configuration
+- Security settings
+
+### Example Configuration
+
+```json
+{
+  "detectionRules": {
+    "cloudProducts": {
+      "packageBased": {
+        "mappings": {
+          "HealthCloud": "Health Cloud",
+          "omnistudio": "OmniStudio"
+        }
+      },
+      "objectBased": {
+        "Service Cloud": {
+          "objects": ["Case", "CaseTeamMember"],
+          "requiredObjects": ["Case"]
+        }
+      }
+    }
+  }
+}
 ```
 
-Save in Markdown format:
-```bash
-sf org-inventory:list --output-file=packages.md --format=markdown
-```
+## Error Handling
 
-Save in text format:
-```bash
-sf org-inventory:list --output-file=packages.txt --format=text
-```
+The plugin includes comprehensive error handling:
+- Retry mechanism for transient failures
+- Structured logging
+- Graceful degradation
+- Clear error messages
+
+## Performance
+
+- Batch processing for large datasets
+- Configurable batch sizes
+- Optimized SOQL queries
+- Progress indicators for long-running operations
+
+## Security
+
+- Input validation
+- Rate limiting
+- Secure credential handling
+- Best practices for API usage
 
 ## Development
 
-### Building the Plugin
+### Prerequisites
+
+- Node.js 14+
+- Salesforce CLI
+- TypeScript
+
+### Setup
 
 ```bash
+# Clone the repository
+git clone [repository-url]
+
+# Install dependencies
+npm install
+
 # Build the plugin
 npm run build
-
-# Run tests
-npm test
-
-# Clean temporary files
-npm run clean
 ```
 
-### Local Development
+### Testing
 
-1. Clone the repo
-   ```bash
-   git clone https://github.com/heeat/Org-Inventory.git
-   ```
-   
-2. Install dependencies
-   ```bash
-   npm install
-   ```
-   
-3. Link the plugin to your local Salesforce CLI
-   ```bash
-   sf plugins link .
-   ```
-   
-4. Build the plugin
-   ```bash
-   npm run build
-   ```
+```bash
+# Run unit tests
+npm test
+
+# Run integration tests
+npm run test:integration
+```
 
 ## Contributing
 
-We love your input! We want to make contributing to this Salesforce CLI plugin as easy and transparent as possible, whether it's:
-
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
-
-### Development Process
-
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Style Guidelines
-
-- Use 2 spaces for indentation
-- Use camelCase for variables, methods, and properties
-- Use PascalCase for class names and interfaces
-- Add JSDoc comments for all methods and classes
-
-## Publishing
-
-To publish updates to npm:
-
-1. Update the version in `package.json`:
-   ```bash
-   npm version patch  # for bug fixes
-   npm version minor  # for new features
-   npm version major  # for breaking changes
-   ```
-
-2. Build and publish:
-   ```bash
-   npm run build
-   npm publish
-   ```
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
 ## License
 
-[MIT](LICENSE)
+MIT License
 
-## Issues
+## Support
 
-Please report any issues at https://github.com/heeat/Org-Inventory/issues 
+For issues and feature requests, please create an issue in the repository. 

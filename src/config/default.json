@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "detectionRules": {
+    "cloudProducts": {
+      "packageBased": {
+        "mappings": {
+          "HealthCloud": "Health Cloud",
+          "omnistudio": "OmniStudio",
+          "oneview": "OneView",
+          "SocialService": "Social Service",
+          "sf_chttr_apps": "Chatter",
+          "sf_com_apps": "Community",
+          "SCSConnectedApp": "Service Cloud",
+          "OIQ": "OmniStudio",
+          "HealthCloudFlow": "Health Cloud",
+          "HealthCloudGA": "Health Cloud"
+        }
+      },
+      "objectBased": {
+        "Service Cloud": {
+          "objects": ["Case", "CaseTeamMember"],
+          "requiredObjects": ["Case"]
+        },
+        "Sales Cloud": {
+          "objects": ["Opportunity", "Account", "Contact"],
+          "requiredObjects": ["Opportunity"]
+        },
+        "Experience Cloud": {
+          "objects": ["Network"],
+          "requiredObjects": ["Network"]
+        },
+        "Field Service": {
+          "objects": ["ServiceResource"],
+          "requiredObjects": ["ServiceResource"]
+        },
+        "Marketing Cloud": {
+          "objects": ["Campaign"],
+          "requiredObjects": ["Campaign"]
+        },
+        "Analytics Cloud": {
+          "objects": ["AnalyticsSettings"],
+          "requiredObjects": ["AnalyticsSettings"]
+        }
+      }
+    },
+    "integrations": {
+      "types": [
+        "NamedCredential",
+        "RemoteSiteSetting",
+        "ConnectedApplication",
+        "AuthProvider",
+        "ExternalDataSource"
+      ],
+      "batchSize": 200
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "output": "console"
+  },
+  "performance": {
+    "batchSize": 200,
+    "timeout": 30000,
+    "retryAttempts": 3,
+    "retryDelay": 1000
+  },
+  "security": {
+    "rateLimit": {
+      "requests": 100,
+      "window": 60000
+    }
+  }
+} 
